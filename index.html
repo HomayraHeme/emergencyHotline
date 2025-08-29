@@ -1,1 +1,95 @@
- 
+ <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Emergency Service Directory</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --brand: #0ea5a4;
+        }
+
+        html,
+        body {
+            font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+        }
+
+        .pill {
+            @apply inline-flex items-center gap-1 rounded-full px-3 py-1 text-sm bg-white/90 shadow;
+        }
+
+        .card {
+            @apply bg-white rounded-2xl p-4 shadow hover:shadow-lg transition;
+        }
+
+        .btn {
+            @apply inline-flex items-center justify-center gap-2 rounded-xl px-3 py-2 text-sm font-medium border;
+        }
+
+        .btn-primary {
+            @apply border-emerald-600 bg-emerald-600 text-white hover:bg-emerald-700;
+        }
+
+        .btn-ghost {
+            @apply border-gray-200 bg-gray-50 text-gray-700 hover:bg-gray-100;
+        }
+
+        .badge {
+            @apply inline-flex items-center rounded-full bg-gray-100 text-gray-700 px-2 py-0.5 text-xs font-medium;
+        }
+    </style>
+</head>
+
+<body class="bg-emerald-50 min-h-screen">
+    <!-- NAVBAR -->
+    <nav class="bg-white/95 backdrop-blur sticky top-0 z-50 border-b border-gray-100">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between">
+                <!-- left -->
+                <div class="flex items-center gap-3">
+                    <div class="h-9 w-9 grid place-content-center rounded-full  text-white text-lg font-bold">
+                        <img src="assets/logo.png" alt="" srcset="">
+                    </div>
+                    <div class="text-green-900 font-extrabold text-lg py- sm:text-xl">
+                        <p class="leading-none">Emergency<br>Service</p>
+                    </div>
+                </div>
+                <!-- right -->
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <div class="flex items-center gap-5 sm:gap-5">
+                        <div class="pill h-[30px] w-[80px] rounded-[30px] bg-green-100 border-gray-100 items-center justify-between flex gap-5"
+                            title="Hearts">
+
+                            <span class="flex items-center gap-1">
+                                <span id="heartCount" class="font-semibold p-[5px] mx-[2px]"> 0</span>
+                                <img class="h-[20px] w-[20px] mx-[20px]" src="assets/heart.png" alt="heart">
+                            </span>
+
+                        </div>
+                    </div>
+
+                    <div class="pill h-[30px] w-[80px] rounded-[30px] bg-green-100 border-gray-100 items-center justify-between flex"
+                        title="
+                        Coins">
+
+                        <span id="coinCount" class="font-semibold mx-[10px]">100</span>
+                        <span class="mx-[10px]"><img class="h-[15px] w-[15px]" src="assets/coin.png" alt=""
+                                srcset=""></span>
+                    </div>
+                    <div class="pill h-[30px] w-[80px] rounded-[30px] bg-emerald-600 border-gray-100 items-center justify-between flex text-white "
+                        title="Copy Count">
+
+                        <span id="copyCount" class="font-semibold mx-[10px]">0</span>
+                        <span class="mx-[5px]">Copy</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>

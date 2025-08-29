@@ -50,10 +50,10 @@
 <body class="bg-emerald-50 min-h-screen">
     <!-- NAVBAR -->
     <nav class="bg-white/95 backdrop-blur sticky top-0 z-50 border-b border-gray-100">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="flex h-16 items-center justify-between gap-2">
+        <div class="mx-auto max-w-7xl px-4 px-1 md:px-8">
+            <div class="flex h-16 items-center justify-between">
                 <!-- left -->
-                <div class="flex  gap-3">
+                <div class="flex  gap-1 md:gap-3">
                     <div class="h-9 w-9 grid place-content-center rounded-full  text-white text-lg font-bold">
                         <img src="assets/logo.png" alt="" srcset="">
                     </div>
@@ -62,8 +62,8 @@
                     </div>
                 </div>
                 <!-- right -->
-                <div class="flex items-center gap-2 ">
-                    <div class="flex items-center gap-5">
+                <div class="flex items-center gap-1 md:gap-2 ">
+                    <div class="flex items-center  ">
                         <div class="pill h-[30px] w-[80px] rounded-[30px] bg-green-100 border-gray-100 items-center justify-between flex gap-5"
                             title="Hearts">
 
@@ -511,3 +511,117 @@
                 </aside>
             </div>
         </main>
+        <script>
+            // --- State ---
+            let hearts = 0;
+            let coins = 100;
+            let copies = 0;
+
+            const heartCountEl = document.getElementById('heartCount');
+            const coinCountEl = document.getElementById('coinCount');
+            const copyCountEl = document.getElementById('copyCount');
+
+            function refreshCounters() {
+                heartCountEl.textContent = hearts;
+                coinCountEl.textContent = coins;
+                copyCountEl.textContent = copies;
+            }
+
+            // --- Helpers ---
+            function copyToClipboard(text) {
+                if (navigator.clipboard && window.isSecureContext) {
+                    return navigator.clipboard.writeText(text);
+                } else {
+                    // Fallback
+                    const ta = document.createElement('textarea');
+                    ta.value = text;
+                    ta.className = 'fixed left-[-9999px]';
+                    document.body.appendChild(ta);
+                    ta.select();
+                    document.execCommand('copy');
+                    ta.remove();
+                    return Promise.resolve();
+                }
+            }
+
+            function addHistory(name, number) {
+                const list = document.getElementById('historyList');
+                const empty = document.getElementById('historyEmpty');
+                empty.style.display = 'none';
+
+                const item = document.createElement('li');
+                const now = new Date();
+                const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                const date = now.toLocaleDateString();
+
+                item.className = 'bg-gray-100 rounded-xl p-3 hover:bg-gray-300';
+                item.innerHTML = `
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <div class="text-sm font-semibold text-gray-900">${name}</div>
+            <div class="text-xs text-gray-500">${number}</div>
+          </div>
+          <div class="text-xs m-auto">${time}<br/> </div>
+        </div>
+      `;
+
+                // newest on top
+                list.insertBefore(item, list.firstChild);
+            }
+
+            // --- Event bindings ---
+            document.querySelectorAll('.heart-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    hearts += 1;
+                    refreshCounters();
+                    btn.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.25)' }, { transform: 'scale(1)' }], { duration: 200 });
+                });
+            });
+
+            document.querySelectorAll('.copy-btn').forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    const card = e.currentTarget.closest('[data-service]');
+                    const number = card?.dataset.number || '';
+                    try {
+                        await copyToClipboard(number);
+                        alert(`Number copied: ${number}`);
+                        copies += 1;
+                        refreshCounters();
+                    } catch (err) {
+                        alert('Failed to copy.');
+                    }
+                });
+            });
+
+            document.querySelectorAll('.call-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const card = e.currentTarget.closest('[data-service]');
+                    const name = card?.dataset.service || 'Service';
+                    const number = card?.dataset.number || '';
+
+                    if (coins < 20) {
+                        alert('Not enough coins. You need 20 coins to make a call.');
+                        return;
+                    }
+
+                    alert(`Calling ${name} ( ${number} )...`);
+                    coins -= 20;
+                    refreshCounters();
+                    addHistory(name, number);
+                });
+            });
+
+            document.getElementById('clearHistory').addEventListener('click', () => {
+                const list = document.getElementById('historyList');
+                list.innerHTML = '';
+                const empty = document.getElementById('historyEmpty');
+                empty.style.display = '';
+            });
+
+            // Initial paint
+            refreshCounters();
+        </script>
+
+</body>
+
+</html>

@@ -493,3 +493,21 @@
 
                         </article>
                     </div>
+                </section>
+
+                <!-- History area -->
+                <aside class="lg:col-span-3 ">
+                    <div class="bg-white rounded-2xl shadow p-4 lg:sticky lg:top-6 h-[700px]">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-semibold text-gray-900 flex items-center gap-2"><span><i
+                                        class="fa-regular fa-clock"></i></span> Call History
+                            </h3>
+                            <button id="clearHistory"
+                                class="btn btn-ghost px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl">Clear</button>
+                        </div>
+                        <div id="historyEmpty" class="text-sm text-gray-500 mt-4">No calls yet.</div>
+                        <ul id="historyList" class="mt-2 space-y-3"></ul>
+                    </div>
+                </aside>
+            </div>
+        </main>
